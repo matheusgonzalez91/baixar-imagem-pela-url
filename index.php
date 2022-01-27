@@ -1,12 +1,19 @@
 <?php
+//Verificando se existe: downloadBtn
 if(isset($_POST['downloadBtn'])){
+    //Verificando se existe: file
     $getURL = $_POST['file'];
     $regPattern = '/\.(jpe?g|png|gif|bmp)$/i';
+    //Pesquisando as strings com preg_match
     if(preg_match($regPattern, $getURL)){
+        //Iniciando a requisão da url com curl_init
         $initCURL = curl_init($getURL);
+        //Definindo os parâmetro da requisição
         curl_setopt($initCURL, CURLOPT_RETURNTRANSFER, true);
+        //Executando a requisição
         $downloadImgLink = curl_exec($initCURL);
         curl_close($initCURL);
+        //Definindo cabeçalho HTPP
         header('Content-type: image/jpg');
         header('Content-Disposition: attachment;filename="image.jpg"');
         echo $downloadImgLink;
